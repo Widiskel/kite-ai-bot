@@ -1,5 +1,7 @@
 # GO KITE AI BOT
 
+Kite AI is an automation tool, used for interacting with Kite AI agents and do on chain transaction on Kite Ai Chains.
+
 ## TABLE OF CONTENTS
 - [GO KITE AI BOT](#go-kite-ai-bot)
   - [TABLE OF CONTENTS](#table-of-contents)
@@ -113,6 +115,6 @@ Feel free to fork and contribute adding or fixing some feature thanks.
 want to support me for creating another bot ?
 **star** my repo or buy me a coffee on
 
-EVM : `0x1f0ea6e0b3590e1ab6c12ea0a24d3d0d9bf7707d`
+EVM : `0x3fe6a02ab20de8bf34fefc106d72d7094c8c4404`
 
 SOLANA : `3tE3Hs7P2wuRyVxyMD7JSf8JTAmEekdNsQWqAnayE1CN`
