@@ -1,0 +1,6 @@
+/target
+accounts.json
+.env
+app.log
+.idea
+proxy_list.json
