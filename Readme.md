@@ -61,6 +61,10 @@ Source: https://x.com/GoKiteAI/status/1887561947715149870
   ```
   rustc --version
   ```
+- Install some dependencies
+  ```
+  sudo apt install curl git build-essential libssl-dev -y
+  ```
 - [Register To Kite AI](#go-kite-ai)
 
 ## SETUP AND CONFIGURE
