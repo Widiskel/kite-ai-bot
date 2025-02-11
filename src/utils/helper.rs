@@ -131,7 +131,11 @@ impl Helper {
    .OMWXNaMX dM0  kM0 MMKxNXKW0    axMk   .                 
    .OMk  dWK oWX XWdx Mxx  XMMO    akMx   .                 
    'OWo  dM0 'kNNXNNd DMD   OWk    aoWd   .                 
-   ........................................                 
+   ........................................
+   . By : Widiskel                        .
+   . Github : https://github.com/widiskel .
+   . Channel : https://t.me/skeldrophunt  .
+   ........................................              
 ";
 
         return logo;
