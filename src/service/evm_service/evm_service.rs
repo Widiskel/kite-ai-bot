@@ -203,7 +203,7 @@ impl EvmService {
                 Spinner::log(
                     &self.acc,
                     format!(
-                        "Transaction Confirmed : {}/tx/{:?}",
+                        "Transaction Confirmed : {}tx/{:?}",
                         self.rpc.explorer, receipt.transaction_hash
                     )
                     .as_str(),
