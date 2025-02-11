@@ -21,9 +21,9 @@ impl SpinnerData {
         SPINNER_DATA_MAP.set(Arc::new(DashMap::new())).unwrap();
     }
 
-    fn default(address: &str) -> SpinnerData {
+    fn default() -> SpinnerData {
         SpinnerData {
-            address: address.to_string(),
+            address: "".to_string(),
             stats: json!({}),
             balance: UserBalance { gas: Decimal::ZERO },
         }
@@ -35,35 +35,35 @@ impl SpinnerData {
             .expect("SPINNER_DATA_MAP not initialized")
     }
 
-    pub fn get_or_create(address: &str) -> SpinnerData {
+    pub fn get_or_create(key: &str) -> SpinnerData {
         let storage = Self::storage();
 
-        if let Some(existing) = storage.get(address) {
+        if let Some(existing) = storage.get(key) {
             return existing.clone();
         }
 
-        let new_data = SpinnerData::default(address);
+        let new_data = SpinnerData::default();
 
-        storage.insert(address.to_string(), new_data.clone());
+        storage.insert(key.to_string(), new_data.clone());
         new_data
     }
 
-    pub fn get(address: &str) -> Option<SpinnerData> {
-        Self::storage().get(address).map(|entry| entry.clone())
+    pub fn get(key: &str) -> Option<SpinnerData> {
+        Self::storage().get(key).map(|entry| entry.clone())
     }
 
-    pub fn update<F>(address: &str, updater: F)
+    pub fn update<F>(key: &str, updater: F)
     where
         F: FnOnce(&mut SpinnerData),
     {
         let storage = Self::storage();
 
-        if let Some(mut entry) = storage.get_mut(address) {
+        if let Some(mut entry) = storage.get_mut(key) {
             updater(&mut entry);
         } else {
-            let mut new_data = SpinnerData::default(address);
+            let mut new_data = SpinnerData::default();
             updater(&mut new_data);
-            storage.insert(address.to_string(), new_data);
+            storage.insert(key.to_string(), new_data);
         }
     }
 }
