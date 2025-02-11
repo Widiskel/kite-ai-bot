@@ -138,12 +138,26 @@ Join here : [**https://t.me/skeldrophunt**](https://t.me/skeldrophunt).
   cp accounts_tmp.json accounts.json
   nano accounts.json
   ```
+  Accounts Format
+  ```
+  [
+    "PRIVATEKEY OR SEED PHARSE HERE",
+    "PRIVATEKEY OR SEED PHARSE HERE"
+  ]
+
+  ```
 - Copy proxy and configure Proxy
   ```
   cp proxy_list_tmp.json proxy_list.json
   nano proxy_list.json
   ```
-  Just Open and leave it [] if you not using proxy
+  Proxy List Format 
+  ```
+  [
+    "protocol://username:password@HOST:PORT",
+    "protocol://username:password@HOST:PORT"
+  ]
+  ```
 - Execute bot
   ```
   ./target/release/kite-ai-bot
