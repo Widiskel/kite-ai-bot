@@ -21,11 +21,14 @@ impl SpinnerData {
         SPINNER_DATA_MAP.set(Arc::new(DashMap::new())).unwrap();
     }
 
-    fn default() -> SpinnerData {
+    pub fn default() -> SpinnerData {
         SpinnerData {
             address: "".to_string(),
             stats: json!({}),
-            balance: UserBalance { gas: Decimal::ZERO },
+            balance: UserBalance {
+                gas: Decimal::ZERO,
+                symbol: String::new(),
+            },
         }
     }
 

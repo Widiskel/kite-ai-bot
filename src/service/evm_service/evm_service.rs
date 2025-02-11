@@ -62,7 +62,7 @@ impl EvmService {
             client,
             address: wallet.address(),
             formatted_address,
-            balance: UserBalance { gas: Decimal::ZERO },
+            balance: SpinnerData::default().balance,
         })
     }
 
@@ -74,6 +74,7 @@ impl EvmService {
                     gas: format_ether(gas_balance)
                         .parse::<Decimal>()
                         .unwrap_or(Decimal::ZERO),
+                    symbol: self.rpc.symbol.to_string(),
                 };
                 SpinnerData::update(&self.acc, |data| data.balance = self.balance.to_owned());
                 Spinner::log(&self.acc, "Successfully Get Wallet Balance...", 1000).await;

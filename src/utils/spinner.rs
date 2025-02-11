@@ -58,7 +58,7 @@ impl Spinner {
                 r#"
 ================= Account {} ===============
 Address             : {}
-Balance             : {:?}
+Balance             : {:?} {}
 Interaction (Today) : {:?} ({:?}/{:?})
 
 Status : {}
@@ -68,6 +68,7 @@ Delay : {}
                 acc_idx.unwrap_or(0) + 1,
                 spinner_data.address,
                 spinner_data.balance.gas,
+                spinner_data.balance.symbol.as_str(),
                 spinner_data
                     .stats
                     .get("total_interactions")
