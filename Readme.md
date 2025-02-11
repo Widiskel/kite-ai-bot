@@ -96,7 +96,7 @@ Source: https://x.com/GoKiteAI/status/1887561947715149870
   ```
 - Copy proxy and configure Proxy
   ```
-  cp accounts_tmp.json accounts.json
+  cp proxy_list_tmp.json proxy_list.json
   nano accounts.json
   ```
   Just Open and leave it [] if you not using proxy
