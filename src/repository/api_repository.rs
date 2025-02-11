@@ -5,7 +5,10 @@ use crate::{
         exception::{api_error::ApiError, setup_error::SetupError},
         spinner_data::SpinnerData,
     },
-    service::api::api_service::{ApiService, HttpMethod},
+    service::{
+        api::api_service::{ApiService, HttpMethod},
+        db::rustqlite::RustQLite,
+    },
     utils::{
         configuration::Config, constants, exception_handler::ExceptionHandler, helper::Helper,
         spinner::Spinner,
@@ -442,6 +445,7 @@ impl ApiRepository {
             Ok(res) if res.status.is_success() => {
                 Spinner::log(&self.acc, "Successfully Report Onchain Ussage...", 1000).await;
                 self.get_user_stats(address).await;
+                RustQLite::insert_log(address, "interact").await;
             }
             Ok(res) => {
                 let error = ExceptionHandler::create_api_eror(res);

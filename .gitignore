@@ -4,3 +4,4 @@ accounts.json
 app.log
 .idea
 proxy_list.json
+database.db

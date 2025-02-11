@@ -1,7 +1,7 @@
 use kite_ai_bot::{
     model::exception::operation_error::OperationError,
     repository::api_repository::ApiRepository,
-    service::evm_service::evm_service::EvmService,
+    service::{db::rustqlite::RustQLite, evm_service::evm_service::EvmService},
     utils::{
         configuration::Config,
         exception_handler::ExceptionHandler,
@@ -20,6 +20,7 @@ async fn main() {
 
     Config::init().expect("Failed to initialize Configuration");
     logger::init_logger().expect("Failed to initialize logger");
+    RustQLite::init().await;
     Spinner::init().await;
 
     let account_list = Helper::read_data_from_file("accounts.json");
@@ -99,19 +100,28 @@ async fn operation(acc: &str) {
             }
         }
 
-        api_repository
-            .chat_with_professor_agent(&evm_service.formatted_address)
-            .await;
-        Spinner::log(&acc, "Delaying 1 Min Before Chat Other Agent...", 60000).await;
-        api_repository
-            .chat_with_sherlock_agent(&evm_service.formatted_address)
-            .await;
-        Spinner::log(&acc, "Delaying 1 Min Before Chat Other Agent...", 60000).await;
-        api_repository
-            .chat_with_buddy_agent(&evm_service.formatted_address)
-            .await;
-
         let delay = 60000;
-        Spinner::log(&acc, "Account Processing Complete...", delay).await;
+        if RustQLite::get_logs_today(&evm_service.formatted_address, "interact")
+            .await
+            .len()
+            <= Config::get().interaction as usize
+        {
+            api_repository
+                .chat_with_professor_agent(&evm_service.formatted_address)
+                .await;
+            Spinner::log(&acc, "Delaying 1 Min Before Chat Other Agent...", 60000).await;
+            api_repository
+                .chat_with_sherlock_agent(&evm_service.formatted_address)
+                .await;
+            Spinner::log(&acc, "Delaying 1 Min Before Chat Other Agent...", 60000).await;
+            api_repository
+                .chat_with_buddy_agent(&evm_service.formatted_address)
+                .await;
+
+            Spinner::log(&acc, "Account Processing Complete...", delay).await;
+        } else {
+            let delay = 60000 * 60 * 24;
+            Spinner::log(&acc, "Account Processing Complete...", delay).await;
+        }
     }
 }

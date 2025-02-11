@@ -10,6 +10,7 @@ Kite AI is an automation tool, used for interacting with Kite AI agents and do o
   - [BOT FEATURE](#bot-feature)
   - [PRE-SETUP](#pre-setup)
   - [SETUP AND CONFIGURE](#setup-and-configure)
+  - [UPDATE BOT](#update-bot)
   - [NOTE](#note)
   - [CONTRIBUTE](#contribute)
   - [SUPPORT](#support)
@@ -104,7 +105,24 @@ Source: https://x.com/GoKiteAI/status/1887561947715149870
   ```
   ./target/release/kite-ai-bot
   ```
-
+## UPDATE BOT
+To update bot, run this command
+- Stash if there any change on local
+  ```
+  git stash
+  ```
+- Pull with rebase flags
+  ```
+  git pull --rebase
+  ```
+- Rebuild binary
+  ```
+  cargo build --release
+  ```
+- Done , now rerun
+  ```
+  ./target/release/kite-ai-bot
+  ```
 
 ## NOTE
 DWYOR & Always use a new wallet when running the bot, I am not responsible for any loss of assets.

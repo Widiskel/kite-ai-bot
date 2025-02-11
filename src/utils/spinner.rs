@@ -6,7 +6,10 @@ use std::time::Duration;
 use tokio::sync::OnceCell;
 use tokio::time::sleep;
 
-use crate::model::spinner_data::SpinnerData;
+use crate::{
+    model::spinner_data::SpinnerData, service::db::rustqlite::RustQLite,
+    utils::configuration::Config,
+};
 
 use super::helper::Helper;
 
@@ -54,9 +57,9 @@ impl Spinner {
             let formatted_message = format!(
                 r#"
 ================= Account {} ===============
-Address     : {}
-Balance     : {:?}
-Interaction : {:?}
+Address             : {}
+Balance             : {:?}
+Interaction (Today) : {:?} ({:?}/{:?})
 
 Status : {}
 Delay : {}
@@ -70,6 +73,10 @@ Delay : {}
                     .get("total_interactions")
                     .and_then(|bal| bal.as_u64())
                     .map_or_else(|| 0, |b| b),
+                RustQLite::get_logs_today(&spinner_data.address, "interact")
+                    .await
+                    .len(),
+                Config::get().interaction,
                 msg,
                 Helper::ms_to_time(remaining_duration.as_millis() as u64)
             );
