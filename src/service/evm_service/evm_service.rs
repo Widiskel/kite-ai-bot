@@ -32,7 +32,7 @@ pub struct EvmService {
 impl EvmService {
     pub fn new(
         acc: &Arc<String>,
-        network: Network,
+        network: &Network,
     ) -> Result<Self, Box<dyn std::error::Error + Send + Sync>> {
         let rpc = network.get_rpc_details();
         let provider: Arc<Provider<Http>> = Arc::new(Provider::<Http>::try_from(rpc.rpc_url)?);

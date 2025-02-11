@@ -1,5 +1,5 @@
 use kite_ai_bot::{
-    model::exception::operation_error::OperationError,
+    model::{exception::operation_error::OperationError, spinner_data::SpinnerData},
     repository::api_repository::ApiRepository,
     service::{db::rustqlite::RustQLite, evm_service::evm_service::EvmService},
     utils::{
@@ -11,6 +11,7 @@ use kite_ai_bot::{
         spinner::Spinner,
     },
 };
+use rust_decimal::{prelude::FromPrimitive, Decimal};
 use std::sync::Arc;
 
 #[tokio::main]
@@ -68,7 +69,8 @@ async fn operation(acc: &str) {
 
     loop {
         Spinner::log(&acc, "Initializing Wallet...", 1000).await;
-        let mut evm_service = match EvmService::new(&acc, Network::KITEAI) {
+        let network = Network::KITEAI;
+        let mut evm_service = match EvmService::new(&acc, &network) {
             Ok(service) => service,
             Err(err) => {
                 ExceptionHandler::operation_error(&acc, OperationError::from(err)).await;
@@ -92,11 +94,25 @@ async fn operation(acc: &str) {
             .await;
 
         if Config::get().use_onchain {
-            match evm_service.transfer().await {
-                Ok(()) => {}
-                Err(error) => {
-                    ExceptionHandler::operation_error(&acc, OperationError::from(error)).await
+            if SpinnerData::get_or_create(&acc).balance.gas > Decimal::from_i32(0).unwrap() {
+                match evm_service.transfer().await {
+                    Ok(()) => {}
+                    Err(error) => {
+                        ExceptionHandler::operation_error(&acc, OperationError::from(error)).await
+                    }
                 }
+            } else {
+                ExceptionHandler::operation_error(
+                    &acc,
+                    OperationError::new(
+                        &format!(
+                            "You dont have {} to use On Chain Feature",
+                            Network::get_rpc_details(&network).symbol
+                        )
+                        .as_str(),
+                    ),
+                )
+                .await
             }
         }
 
