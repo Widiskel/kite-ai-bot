@@ -90,10 +90,12 @@ async fn operation(acc: &str) {
             .get_user_stats(&evm_service.formatted_address)
             .await;
 
-        match evm_service.transfer().await {
-            Ok(()) => {}
-            Err(error) => {
-                ExceptionHandler::operation_error(&acc, OperationError::from(error)).await
+        if Config::get().use_onchain {
+            match evm_service.transfer().await {
+                Ok(()) => {}
+                Err(error) => {
+                    ExceptionHandler::operation_error(&acc, OperationError::from(error)).await
+                }
             }
         }
 
