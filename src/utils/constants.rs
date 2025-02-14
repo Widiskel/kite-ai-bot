@@ -1,5 +1,5 @@
-pub const PROFESSOR_AGENT: &str = "deployment_UU9y1Z4Z85RAPGwkss1mUUiZ";
-pub const CRYPTO_BUDDY: &str = "deployment_ECz5O55dH0dBQaGKuT47kzYC";
+pub const PROFESSOR_AGENT: &str = "deployment_Hp4Y88pxNQXwLMPxlLICJZzN";
+pub const CRYPTO_BUDDY: &str = "deployment_nC3y3k7zy6gekSZMCSordHu7";
 pub const SHERLOCK: &str = "deployment_SoFftlsf9z4fyA3QCHYkaANq";
 
 pub const PROFFESOR_MESSAGE_LIST: [&str; 50] = [
